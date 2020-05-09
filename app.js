@@ -18,7 +18,43 @@ const render = require("./lib/htmlRenderer");
 //their role with the company. For instance, an intern may provide their school, whereas an engineer may 
 //provide their GitHub username.
 
+function employeeData() {
 
+    return inquirer.prompt([
+      {
+        type: "input",
+        message: "What is your name?",
+        name: "name"
+      },
+      {
+        type: "input",
+        message: "What is your ID number?",
+        name: "id"
+      },
+      {
+        type: "input",
+        message: "What is your email address?",
+        name: "email"
+      },
+      {
+        type: "input",
+        message: "What is your office number?",
+        name: "officenumber"
+      },
+      {
+        type: "input",
+        message: "What is your GitHub username?",
+        name: "github"
+      },
+      {
+        type: "input",
+        message: "What school do you attend?",
+        name: "school"
+      }
+    ])
+  }
+
+  employeeData()
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
