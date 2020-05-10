@@ -20,41 +20,115 @@ const render = require("./lib/htmlRenderer");
 
 function employeeData() {
 
-    return inquirer.prompt([
-      {
-        type: "input",
-        message: "What is your name?",
-        name: "name"
-      },
-      {
-        type: "input",
-        message: "What is your ID number?",
-        name: "id"
-      },
-      {
-        type: "input",
-        message: "What is your email address?",
-        name: "email"
-      },
-      {
-        type: "input",
-        message: "What is your office number?",
-        name: "officenumber"
-      },
-      {
-        type: "input",
-        message: "What is your GitHub username?",
-        name: "github"
-      },
-      {
-        type: "input",
-        message: "What school do you attend?",
-        name: "school"
-      }
+    new Manager = inquirer.prompt([
+        {
+            type: "input",
+            message: "What is your manager's name?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "What is your manager's id?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "What is your manager's email?",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "What is your manager's office number?",
+            name: "officeNumber"
+        }
     ])
-  }
 
-  employeeData()
+
+    let i = answers
+
+    while (i = !'I don/t want to add anymore team members') {
+
+        inquirer.prompt([
+            {
+                type: 'list',
+                name: 'team',
+                message: 'Which type of team member would you like to add',
+                choices: ['Engineer', 'Intern', 'I don/t want to add anymore team members.']
+            }
+        ])
+
+            if (answer = "Engineer") {
+                new Engineer = inquirer.prompt([
+                    {
+                        type: "input",
+                        message: "What is your engineer's name?",
+                        name: "name"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your engineer's id?",
+                        name: "id"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your engineer's email?",
+                        name: "email"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your engineer's GitHub username?",
+                        name: "github"
+                    }
+                ])
+            } else {
+                new Intern = inquirer.prompt([
+                    {
+                        type: "input",
+                        message: "What is your intern's name?",
+                        name: "name"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your intern's id?",
+                        name: "id"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your intern's email?",
+                        name: "email"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your intern's school?",
+                        name: "github"
+                    }
+                ])
+
+            }
+    }
+
+
+}
+
+employeeData();
+
+
+
+
+// Ask questions to gather information about manager. Save to an manager object.
+
+// Determine if an engineer or intern will be added next.
+
+// Depending on the response, loop through questions to gather information and save to appropriate object
+
+// Loop back to original question for engineer or intern and begin again until user calls "I don't want to add
+//anymore team members", at which point the loop stops
+
+//Call the function
+
+
+
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
