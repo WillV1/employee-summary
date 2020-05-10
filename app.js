@@ -20,7 +20,8 @@ const render = require("./lib/htmlRenderer");
 
 function employeeData() {
 
-    new Manager = inquirer.prompt([
+    let manager =
+    new Manager (inquirer.prompt([
         {
             type: "input",
             message: "What is your manager's name?",
@@ -41,7 +42,7 @@ function employeeData() {
             message: "What is your manager's office number?",
             name: "officeNumber"
         }
-    ])
+    ]))
 
 
     let i = answers
@@ -58,7 +59,7 @@ function employeeData() {
         ])
 
             if (answer = "Engineer") {
-                new Engineer = inquirer.prompt([
+                let engineer = new Engineer (inquirer.prompt([
                     {
                         type: "input",
                         message: "What is your engineer's name?",
@@ -79,9 +80,9 @@ function employeeData() {
                         message: "What is your engineer's GitHub username?",
                         name: "github"
                     }
-                ])
+                ]))
             } else {
-                new Intern = inquirer.prompt([
+                let intern = new Intern (inquirer.prompt([
                     {
                         type: "input",
                         message: "What is your intern's name?",
@@ -102,8 +103,7 @@ function employeeData() {
                         message: "What is your intern's school?",
                         name: "github"
                     }
-                ])
-
+                ]))
             }
     }
 
@@ -112,6 +112,15 @@ function employeeData() {
 
 employeeData();
 
+render([Manager, Engineer, Intern]); 
+
+fs.writeFile(outputPath, function(err) {
+
+    if (err) {
+      return console.log(err);
+    }
+  
+  });
 
 
 
@@ -125,8 +134,6 @@ employeeData();
 //anymore team members", at which point the loop stops
 
 //Call the function
-
-
 
 
 
