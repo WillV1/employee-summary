@@ -5,6 +5,8 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
+let answer;
+
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -44,71 +46,124 @@ function employeeData() {
             }
         ])
 
-        .then((function (data) {
-            inquirer.prompt([
-                {
-                    type: 'list',
-                    name: 'team',
-                    message: 'Which type of team member would you like to add',
-                    choices: ['Engineer', 'Intern', 'I don/t want to add anymore team members.']
-                }
-            ])
-
-        })))
-
-            let answer;
-            if (answer !== 'I don/t want to add anymore team members') {
-                (answer == "Engineer");
-                let engineer = new Engineer(inquirer.prompt([
+            .then((function () {
+                inquirer.prompt([
                     {
-                        type: "input",
-                        message: "What is your engineer's name?",
-                        name: "name"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your engineer's id?",
-                        name: "id"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your engineer's email?",
-                        name: "email"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your engineer's GitHub username?",
-                        name: "github"
+                        type: 'list',
+                        name: 'team',
+                        message: 'Which type of team member would you like to add',
+                        choices: [{ name: 'Engineer', value: 0 }, { name: 'Intern', value: 1 }, { name: 'I don/t want to add anymore team members.', value: 2 }]
                     }
-                ]));
-            }
-            // else if (answer == "Intern") {
-            //     let intern = new Intern(inquirer.prompt([
-            //         {
-            //             type: "input",
-            //             message: "What is your intern's name?",
-            //             name: "name"
-            //         },
-            //         {
-            //             type: "input",
-            //             message: "What is your intern's id?",
-            //             name: "id"
-            //         },
-            //         {
-            //             type: "input",
-            //             message: "What is your intern's email?",
-            //             name: "email"
-            //         },
-            //         {
-            //             type: "input",
-            //             message: "What is your intern's school?",
-            //             name: "github"
-            //         }
-            //     ]));
+                ])
+                    .then((answer) => {
 
-            // }
+                        if (answer.team === 0) {
+                            let engineer = new Engineer(inquirer.prompt([
+                                {
+                                    type: "input",
+                                    message: "What is your engineer's name?",
+                                    name: "e-name"
+                                },
+                                {
+                                    type: "input",
+                                    message: "What is your engineer's id?",
+                                    name: "e-id"
+                                },
+                                {
+                                    type: "input",
+                                    message: "What is your engineer's email?",
+                                    name: "e-email"
+                                },
+                                {
+                                    type: "input",
+                                    message: "What is your engineer's GitHub username?",
+                                    name: "github"
+                                }
+                            ]));
+                        }
+                        else if (answer.team === 1) {
+                            let intern = new Intern(inquirer.prompt([
+                                {
+                                    type: "input",
+                                    message: "What is your intern's name?",
+                                    name: "name"
+                                },
+                                {
+                                    type: "input",
+                                    message: "What is your intern's id?",
+                                    name: "id"
+                                },
+                                {
+                                    type: "input",
+                                    message: "What is your intern's email?",
+                                    name: "email"
+                                },
+                                {
+                                    type: "input",
+                                    message: "What is your intern's school?",
+                                    name: "school"
+                                }
+                            ]));
+                        }
+                    })
 
-        
+            }))
+
+        // .then((function (answer) {
+
+        //         if (answer == "Engineer"){
+        //         let engineer = new Engineer(inquirer.prompt([
+        //             {
+        //                 type: "input",
+        //                 message: "What is your engineer's name?",
+        //                 name: "name"
+        //             },
+        //             {
+        //                 type: "input",
+        //                 message: "What is your engineer's id?",
+        //                 name: "id"
+        //             },
+        //             {
+        //                 type: "input",
+        //                 message: "What is your engineer's email?",
+        //                 name: "email"
+        //             },
+        //             {
+        //                 type: "input",
+        //                 message: "What is your engineer's GitHub username?",
+        //                 name: "github"
+        //             }
+        //         ]));
+        //     }
+
+        //     else if (answer == "Intern") {
+        //         let intern = new Intern(inquirer.prompt([
+        //             {
+        //                 type: "input",
+        //                 message: "What is your intern's name?",
+        //                 name: "name"
+        //             },
+        //             {
+        //                 type: "input",
+        //                 message: "What is your intern's id?",
+        //                 name: "id"
+        //             },
+        //             {
+        //                 type: "input",
+        //                 message: "What is your intern's email?",
+        //                 name: "email"
+        //             },
+        //             {
+        //                 type: "input",
+        //                 message: "What is your intern's school?",
+        //                 name: "github"
+        //             }
+        //         ]));
+
+        //     }
+        // }))
+    )
+
 
 }
 employeeData()
