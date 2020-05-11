@@ -18,7 +18,7 @@ const render = require("./lib/htmlRenderer");
 //their role with the company. For instance, an intern may provide their school, whereas an engineer may 
 //provide their GitHub username.
 
-function employeeData() {
+function managerData() {
 
     let manager =
         new Manager(inquirer.prompt([
@@ -43,72 +43,90 @@ function employeeData() {
                 name: "officeNumber"
             }
         ]))
-    }
-        employeeData();       
+}
+// function teamMembers() {
 
-    let i = answers
+//     employeeData()
 
-    while (i = !'I don/t want to add anymore team members') {
+//         .then(function (data) {
+//             //api.apiCall(data.username)
+//             //.then(function (avatar) {
+//             //const url = (avatar.data.avatar_url)
+//             console.log(data)
+//             //return writeFileAsync("TestREADME.md", generateMarkdown(data, url));
+//         })
 
-        inquirer.prompt([
-            {
-                type: 'list',
-                name: 'team',
-                message: 'Which type of team member would you like to add',
-                choices: ['Engineer', 'Intern', 'I don/t want to add anymore team members.']
-            }
-        ])
+// }
 
-        if (answer = "Engineer") {
-            let engineer = new Engineer(inquirer.prompt([
-                {
-                    type: "input",
-                    message: "What is your engineer's name?",
-                    name: "name"
-                },
-                {
-                    type: "input",
-                    message: "What is your engineer's id?",
-                    name: "id"
-                },
-                {
-                    type: "input",
-                    message: "What is your engineer's email?",
-                    name: "email"
-                },
-                {
-                    type: "input",
-                    message: "What is your engineer's GitHub username?",
-                    name: "github"
-                }
-            ]))
-        } else {
-            let intern = new Intern(inquirer.prompt([
-                {
-                    type: "input",
-                    message: "What is your intern's name?",
-                    name: "name"
-                },
-                {
-                    type: "input",
-                    message: "What is your intern's id?",
-                    name: "id"
-                },
-                {
-                    type: "input",
-                    message: "What is your intern's email?",
-                    name: "email"
-                },
-                {
-                    type: "input",
-                    message: "What is your intern's school?",
-                    name: "github"
-                }
-            ]))
+function teamMembers() {
+
+    managerData()
+
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'team',
+            message: 'Which type of team member would you like to add',
+            choices: ['Engineer', 'Intern', 'I don/t want to add anymore team members.']
         }
-    }
+    ])
 
+        .then(function () {
+            let answer;
 
+            if (answer !== 'I don/t want to add anymore team members') {
+
+                (answer == "Engineer")
+                let engineer = new Engineer(inquirer.prompt([
+                    {
+                        type: "input",
+                        message: "What is your engineer's name?",
+                        name: "name"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your engineer's id?",
+                        name: "id"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your engineer's email?",
+                        name: "email"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your engineer's GitHub username?",
+                        name: "github"
+                    }
+                ]))
+            } else if (answer == "Intern") {
+                let intern = new Intern(inquirer.prompt([
+                    {
+                        type: "input",
+                        message: "What is your intern's name?",
+                        name: "name"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your intern's id?",
+                        name: "id"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your intern's email?",
+                        name: "email"
+                    },
+                    {
+                        type: "input",
+                        message: "What is your intern's school?",
+                        name: "github"
+                    }
+                ]))
+            }
+        })
+        }
+
+teamMembers()
 
 
 
@@ -121,7 +139,7 @@ function employeeData() {
 //                 return console.log(err);
 //             }
 
-        
+
 
 //render([Manager, Engineer, Intern]);
 
