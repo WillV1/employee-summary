@@ -21,29 +21,30 @@ const render = require("./lib/htmlRenderer");
 function employeeData() {
 
     let manager =
-    new Manager (inquirer.prompt([
-        {
-            type: "input",
-            message: "What is your manager's name?",
-            name: "name"
-        },
-        {
-            type: "input",
-            message: "What is your manager's id?",
-            name: "id"
-        },
-        {
-            type: "input",
-            message: "What is your manager's email?",
-            name: "email"
-        },
-        {
-            type: "input",
-            message: "What is your manager's office number?",
-            name: "officeNumber"
-        }
-    ]))
-
+        new Manager(inquirer.prompt([
+            {
+                type: "input",
+                message: "What is your manager's name?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "What is your manager's id?",
+                name: "id"
+            },
+            {
+                type: "input",
+                message: "What is your manager's email?",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "What is your manager's office number?",
+                name: "officeNumber"
+            }
+        ]))
+    }
+        employeeData();       
 
     let i = answers
 
@@ -58,69 +59,79 @@ function employeeData() {
             }
         ])
 
-            if (answer = "Engineer") {
-                let engineer = new Engineer (inquirer.prompt([
-                    {
-                        type: "input",
-                        message: "What is your engineer's name?",
-                        name: "name"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your engineer's id?",
-                        name: "id"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your engineer's email?",
-                        name: "email"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your engineer's GitHub username?",
-                        name: "github"
-                    }
-                ]))
-            } else {
-                let intern = new Intern (inquirer.prompt([
-                    {
-                        type: "input",
-                        message: "What is your intern's name?",
-                        name: "name"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your intern's id?",
-                        name: "id"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your intern's email?",
-                        name: "email"
-                    },
-                    {
-                        type: "input",
-                        message: "What is your intern's school?",
-                        name: "github"
-                    }
-                ]))
-            }
+        if (answer = "Engineer") {
+            let engineer = new Engineer(inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What is your engineer's name?",
+                    name: "name"
+                },
+                {
+                    type: "input",
+                    message: "What is your engineer's id?",
+                    name: "id"
+                },
+                {
+                    type: "input",
+                    message: "What is your engineer's email?",
+                    name: "email"
+                },
+                {
+                    type: "input",
+                    message: "What is your engineer's GitHub username?",
+                    name: "github"
+                }
+            ]))
+        } else {
+            let intern = new Intern(inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What is your intern's name?",
+                    name: "name"
+                },
+                {
+                    type: "input",
+                    message: "What is your intern's id?",
+                    name: "id"
+                },
+                {
+                    type: "input",
+                    message: "What is your intern's email?",
+                    name: "email"
+                },
+                {
+                    type: "input",
+                    message: "What is your intern's school?",
+                    name: "github"
+                }
+            ]))
+        }
     }
 
 
-}
 
-employeeData();
 
-render([Manager, Engineer, Intern]); 
 
-fs.writeFile(outputPath, function(err) {
 
-    if (err) {
-      return console.log(err);
-    }
-  
-  });
+// render([manager, engineer, intern])
+
+//     .fs.writeFile(outputPath, function (err) {
+
+//             if (err) {
+//                 return console.log(err);
+//             }
+
+        
+
+//render([Manager, Engineer, Intern]);
+
+//fs.writeFile(outputPath, function(err) {
+
+//     if (err) {
+//       return console.log(err);
+//     }
+
+//   });
 
 
 
