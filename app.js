@@ -20,64 +20,50 @@ const render = require("./lib/htmlRenderer");
 //provide their GitHub username.
 
 
-// render([manager, engineer, intern])
 
-//     .fs.writeFile(outputPath, function (err) {
-
-//             if (err) {
-//                 return console.log(err);
-//             }
-
-
-
-//render([Manager, Engineer, Intern]);
-
-//fs.writeFile(outputPath, function(err) {
-
-//     if (err) {
-//       return console.log(err);
-//     }
-
-//   });
 
 const engagementTeam = [];
-let inquiryCount = 0;
+
 
 
 async function teamMember() {
     // Ask questions to gather information about manager. Save to an manager object.
     try {
 
-        const manager = new Manager(
-            await inquirer.prompt([
-                {
-                    type: "input",
-                    message: "What is your manager's name?",
-                    name: "name"
-                },
-                {
-                    type: "input",
-                    message: "What is your manager's id?",
-                    name: "id"
-                },
-                {
-                    type: "input",
-                    message: "What is your manager's email?",
-                    name: "email"
-                },
-                {
-                    type: "input",
-                    message: "What is your manager's office number?",
-                    name: "officeNumber"
-                }
-            ]))
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "What is your manager's name?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "What is your manager's id?",
+                name: "id"
+            },
+            {
+                type: "input",
+                message: "What is your manager's email?",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "What is your manager's office number?",
+                name: "officeNumber"
+            }
+        ])
 
-        engagementTeam.push(manager)
+            .then(function (answers) {
+                let manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+                engagementTeam.push(manager)
+                chooseMemberNext()
+            });
+
         // Determine if an engineer or intern will be added next.
 
         async function chooseMemberNext() {
             try {
-                do{
+
                 let teamChoice = await inquirer.prompt([
                     {
                         type: 'list',
@@ -87,36 +73,41 @@ async function teamMember() {
                     }
                 ]);
 
-
-
-                
                 // Depending on the response, loop through questions to gather information and save to appropriate object
                 if (teamChoice.team === 'Engineer') {
 
-                    let engineer = new Engineer(inquirer.prompt([
+                    inquirer.prompt([
                         {
                             type: "input",
                             message: "What is your engineer's name?",
-                            name: "e-name"
+                            name: "name"
                         },
                         {
                             type: "input",
                             message: "What is your engineer's id?",
-                            name: "e-id"
+                            name: "id"
                         },
                         {
                             type: "input",
                             message: "What is your engineer's email?",
-                            name: "e-email"
+                            name: "email"
                         },
                         {
                             type: "input",
                             message: "What is your engineer's GitHub username?",
                             name: "github"
                         }
-                    ]));
+                    ])
+
+                        .then(function (answers) {
+                            let engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+                            engagementTeam.push(engineer);
+                            chooseMemberNext();
+                        });
+
+
                 } else if (teamChoice.team === 'Intern') {
-                    let intern = new Intern(inquirer.prompt([
+                    inquirer.prompt([
                         {
                             type: "input",
                             message: "What is your intern's name?",
@@ -137,16 +128,20 @@ async function teamMember() {
                             message: "What is your intern's school?",
                             name: "school"
                         }
-                    ]));
-                } else if(teamChoice.team === 'I don/t want to add anymore team members.') {
-                    return false
-                }
-            } while(true)
+                    ])
+                        .then(function (answers) {
+                            let intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+                            engagementTeam.push(intern);
+                            chooseMemberNext();
+                        });
+
+                } else {generateFile()}
+
+
             } catch (err) {
                 console.log(err);
             }
         }
-        chooseMemberNext()
         // Loop back to original question for engineer or intern and begin again until user calls "I don't want to add
         //anymore team members", at which point the loop stops
 
@@ -156,10 +151,16 @@ async function teamMember() {
 
 }
 
-
 teamMember();
 
 //Call the function
+
+
+
+
+function generateFile() {
+    fs.writeFileSync(outputPath, render(engagementTeam),"utf-8")
+}
 
 
 
