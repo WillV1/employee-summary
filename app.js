@@ -5,7 +5,6 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-let answer;
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -20,153 +19,7 @@ const render = require("./lib/htmlRenderer");
 //their role with the company. For instance, an intern may provide their school, whereas an engineer may 
 //provide their GitHub username.
 
-function employeeData() {
 
-    const manager = new Manager(
-        inquirer.prompt([
-            {
-                type: "input",
-                message: "What is your manager's name?",
-                name: "name"
-            },
-            {
-                type: "input",
-                message: "What is your manager's id?",
-                name: "id"
-            },
-            {
-                type: "input",
-                message: "What is your manager's email?",
-                name: "email"
-            },
-            {
-                type: "input",
-                message: "What is your manager's office number?",
-                name: "officeNumber"
-            }
-        ])
-
-            .then((function () {
-                inquirer.prompt([
-                    {
-                        type: 'list',
-                        name: 'team',
-                        message: 'Which type of team member would you like to add',
-                        choices: [{ name: 'Engineer', value: 0 }, { name: 'Intern', value: 1 }, { name: 'I don/t want to add anymore team members.', value: 2 }]
-                    }
-                ])
-                    .then((answer) => {
-
-                        if (answer.team === 0) {
-                            let engineer = new Engineer(inquirer.prompt([
-                                {
-                                    type: "input",
-                                    message: "What is your engineer's name?",
-                                    name: "e-name"
-                                },
-                                {
-                                    type: "input",
-                                    message: "What is your engineer's id?",
-                                    name: "e-id"
-                                },
-                                {
-                                    type: "input",
-                                    message: "What is your engineer's email?",
-                                    name: "e-email"
-                                },
-                                {
-                                    type: "input",
-                                    message: "What is your engineer's GitHub username?",
-                                    name: "github"
-                                }
-                            ]));
-                        }
-                        else if (answer.team === 1) {
-                            let intern = new Intern(inquirer.prompt([
-                                {
-                                    type: "input",
-                                    message: "What is your intern's name?",
-                                    name: "name"
-                                },
-                                {
-                                    type: "input",
-                                    message: "What is your intern's id?",
-                                    name: "id"
-                                },
-                                {
-                                    type: "input",
-                                    message: "What is your intern's email?",
-                                    name: "email"
-                                },
-                                {
-                                    type: "input",
-                                    message: "What is your intern's school?",
-                                    name: "school"
-                                }
-                            ]));
-                        }
-                    })
-
-            }))
-
-        // .then((function (answer) {
-
-        //         if (answer == "Engineer"){
-        //         let engineer = new Engineer(inquirer.prompt([
-        //             {
-        //                 type: "input",
-        //                 message: "What is your engineer's name?",
-        //                 name: "name"
-        //             },
-        //             {
-        //                 type: "input",
-        //                 message: "What is your engineer's id?",
-        //                 name: "id"
-        //             },
-        //             {
-        //                 type: "input",
-        //                 message: "What is your engineer's email?",
-        //                 name: "email"
-        //             },
-        //             {
-        //                 type: "input",
-        //                 message: "What is your engineer's GitHub username?",
-        //                 name: "github"
-        //             }
-        //         ]));
-        //     }
-
-        //     else if (answer == "Intern") {
-        //         let intern = new Intern(inquirer.prompt([
-        //             {
-        //                 type: "input",
-        //                 message: "What is your intern's name?",
-        //                 name: "name"
-        //             },
-        //             {
-        //                 type: "input",
-        //                 message: "What is your intern's id?",
-        //                 name: "id"
-        //             },
-        //             {
-        //                 type: "input",
-        //                 message: "What is your intern's email?",
-        //                 name: "email"
-        //             },
-        //             {
-        //                 type: "input",
-        //                 message: "What is your intern's school?",
-        //                 name: "github"
-        //             }
-        //         ]));
-
-        //     }
-        // }))
-    )
-
-
-}
-employeeData()
 // render([manager, engineer, intern])
 
 //     .fs.writeFile(outputPath, function (err) {
@@ -187,16 +40,124 @@ employeeData()
 
 //   });
 
+const engagementTeam = [];
+let inquiryCount = 0;
 
 
-// Ask questions to gather information about manager. Save to an manager object.
+async function teamMember() {
+    // Ask questions to gather information about manager. Save to an manager object.
+    try {
 
-// Determine if an engineer or intern will be added next.
+        const manager = new Manager(
+            await inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What is your manager's name?",
+                    name: "name"
+                },
+                {
+                    type: "input",
+                    message: "What is your manager's id?",
+                    name: "id"
+                },
+                {
+                    type: "input",
+                    message: "What is your manager's email?",
+                    name: "email"
+                },
+                {
+                    type: "input",
+                    message: "What is your manager's office number?",
+                    name: "officeNumber"
+                }
+            ]))
 
-// Depending on the response, loop through questions to gather information and save to appropriate object
+        engagementTeam.push(manager)
+        // Determine if an engineer or intern will be added next.
 
-// Loop back to original question for engineer or intern and begin again until user calls "I don't want to add
-//anymore team members", at which point the loop stops
+        async function chooseMemberNext() {
+            try {
+                do{
+                let teamChoice = await inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'team',
+                        message: 'Which type of team member would you like to add',
+                        choices: ['Engineer', 'Intern', 'I don/t want to add anymore team members.']
+                    }
+                ]);
+
+
+
+                
+                // Depending on the response, loop through questions to gather information and save to appropriate object
+                if (teamChoice.team === 'Engineer') {
+
+                    let engineer = new Engineer(inquirer.prompt([
+                        {
+                            type: "input",
+                            message: "What is your engineer's name?",
+                            name: "e-name"
+                        },
+                        {
+                            type: "input",
+                            message: "What is your engineer's id?",
+                            name: "e-id"
+                        },
+                        {
+                            type: "input",
+                            message: "What is your engineer's email?",
+                            name: "e-email"
+                        },
+                        {
+                            type: "input",
+                            message: "What is your engineer's GitHub username?",
+                            name: "github"
+                        }
+                    ]));
+                } else if (teamChoice.team === 'Intern') {
+                    let intern = new Intern(inquirer.prompt([
+                        {
+                            type: "input",
+                            message: "What is your intern's name?",
+                            name: "name"
+                        },
+                        {
+                            type: "input",
+                            message: "What is your intern's id?",
+                            name: "id"
+                        },
+                        {
+                            type: "input",
+                            message: "What is your intern's email?",
+                            name: "email"
+                        },
+                        {
+                            type: "input",
+                            message: "What is your intern's school?",
+                            name: "school"
+                        }
+                    ]));
+                } else if(teamChoice.team === 'I don/t want to add anymore team members.') {
+                    return false
+                }
+            } while(true)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        chooseMemberNext()
+        // Loop back to original question for engineer or intern and begin again until user calls "I don't want to add
+        //anymore team members", at which point the loop stops
+
+    } catch (err) {
+        console.log(err);
+    }
+
+}
+
+
+teamMember();
 
 //Call the function
 
