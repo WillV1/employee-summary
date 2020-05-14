@@ -26,9 +26,9 @@ const engagementTeam = [];
 
 
 
-async function teamMember() {
+function teamMember() {
     // Ask questions to gather information about manager. Save to an manager object.
-    try {
+    
 
         inquirer.prompt([
             {
@@ -57,7 +57,10 @@ async function teamMember() {
                 let manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
                 engagementTeam.push(manager)
                 chooseMemberNext()
-            });
+            })
+            .catch(function(err) {
+                console.log(err);
+              });
 
         // Determine if an engineer or intern will be added next.
 
@@ -103,8 +106,10 @@ async function teamMember() {
                             let engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
                             engagementTeam.push(engineer);
                             chooseMemberNext();
-                        });
-
+                        })
+                        .catch(function(err) {
+                            console.log(err);
+                          });
 
                 } else if (teamChoice.team === 'Intern') {
                     inquirer.prompt([
@@ -133,7 +138,10 @@ async function teamMember() {
                             let intern = new Intern(answers.name, answers.id, answers.email, answers.school);
                             engagementTeam.push(intern);
                             chooseMemberNext();
-                        });
+                        })
+                        .catch(function(err) {
+                            console.log(err);
+                          });
 
                 } else {generateFile()}
 
@@ -145,9 +153,7 @@ async function teamMember() {
         // Loop back to original question for engineer or intern and begin again until user calls "I don't want to add
         //anymore team members", at which point the loop stops
 
-    } catch (err) {
-        console.log(err);
-    }
+  
 
 }
 
