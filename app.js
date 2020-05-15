@@ -34,22 +34,34 @@ function teamMember() {
             {
                 type: "input",
                 message: "What is your manager's name?",
-                name: "name"
+                name: "name",
+                validate: function validateManagerName(name){
+                    return name !== 'string';
+                } 
             },
             {
                 type: "input",
                 message: "What is your manager's id?",
-                name: "id"
+                name: "id",
+                validate: function validateIDNum(name){
+                    return name !== isNaN(name);
+                } 
             },
             {
                 type: "input",
                 message: "What is your manager's email?",
-                name: "email"
+                name: "email",
+                validate: function validateEmail(name){
+                    return name === (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value))
+                }
             },
             {
                 type: "input",
                 message: "What is your manager's office number?",
-                name: "officeNumber"
+                name: "officeNumber",
+                validate: function validateOfficeNum(name){
+                    return name !== isNaN(name);
+                } 
             }
         ])
 
@@ -83,7 +95,10 @@ function teamMember() {
                         {
                             type: "input",
                             message: "What is your engineer's name?",
-                            name: "name"
+                            name: "name",
+                            validate: function validateEngineerName(name){
+                                return name !== '';
+                            }
                         },
                         {
                             type: "input",
@@ -116,7 +131,10 @@ function teamMember() {
                         {
                             type: "input",
                             message: "What is your intern's name?",
-                            name: "name"
+                            name: "name",
+                            validate: function validateInternName(name){
+                                return name !== '';
+                            }
                         },
                         {
                             type: "input",
