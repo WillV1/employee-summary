@@ -24,7 +24,30 @@ const render = require("./lib/htmlRenderer");
 
 const engagementTeam = [];
 
+const confirmName = async (name) => {
+    if (name === '') {
+       return 'Incorrect answer';
+    };
+    return true;
+ };
 
+ const confirmNumber = async (name) => {
+    if (name === '') {
+       return 'Incorrect answer';
+    };
+    return true;
+ };
+ 
+ function validateEmail(name) 
+{if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(name))
+  {
+    return (true)
+  }
+    return("You have entered an invalid email address!")
+}
+
+
+//Write out validations; check out link about NaN; find out substitutes to check number validation; chain validations on first prompt
 
 function teamMember() {
     // Ask questions to gather information about manager. Save to an manager object.
@@ -35,33 +58,25 @@ function teamMember() {
                 type: "input",
                 message: "What is your manager's name?",
                 name: "name",
-                validate: function validateManagerName(name){
-                    return name !== 'string';
-                } 
+                validate: confirmName
             },
             {
                 type: "input",
                 message: "What is your manager's id?",
                 name: "id",
-                validate: function validateIDNum(name){
-                    return name !== isNaN(name);
-                } 
+                validate: confirmNumber 
             },
             {
                 type: "input",
                 message: "What is your manager's email?",
                 name: "email",
-                validate: function validateEmail(name){
-                    return name === (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value))
-                }
+                validate: validateEmail
             },
             {
                 type: "input",
                 message: "What is your manager's office number?",
                 name: "officeNumber",
-                validate: function validateOfficeNum(name){
-                    return name !== isNaN(name);
-                } 
+                validate: confirmNumber
             }
         ])
 
@@ -96,24 +111,25 @@ function teamMember() {
                             type: "input",
                             message: "What is your engineer's name?",
                             name: "name",
-                            validate: function validateEngineerName(name){
-                                return name !== '';
-                            }
+                            validate: confirmName
                         },
                         {
                             type: "input",
                             message: "What is your engineer's id?",
-                            name: "id"
+                            name: "id",
+                            validate: confirmNumber
                         },
                         {
                             type: "input",
                             message: "What is your engineer's email?",
-                            name: "email"
+                            name: "email",
+                            validate: validateEmail
                         },
                         {
                             type: "input",
                             message: "What is your engineer's GitHub username?",
-                            name: "github"
+                            name: "github",
+                            validate: confirmName
                         }
                     ])
 
@@ -132,24 +148,25 @@ function teamMember() {
                             type: "input",
                             message: "What is your intern's name?",
                             name: "name",
-                            validate: function validateInternName(name){
-                                return name !== '';
-                            }
+                            validate: confirmName
                         },
                         {
                             type: "input",
                             message: "What is your intern's id?",
-                            name: "id"
+                            name: "id",
+                            validate: confirmNumber
                         },
                         {
                             type: "input",
                             message: "What is your intern's email?",
-                            name: "email"
+                            name: "email",
+                            validate: validateEmail 
                         },
                         {
                             type: "input",
                             message: "What is your intern's school?",
-                            name: "school"
+                            name: "school",
+                            validate: confirmName
                         }
                     ])
                         .then(function (answers) {
